@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Travel Photo Sharing</title>
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js"></script>
+
 </head>
 <body>
     <div class="container">
@@ -14,17 +17,24 @@
 
         <!-- Login Section -->
         <div id="login-section">
-            <button id="login-btn">Login with Google</button>
+            <button id="login-btn" class="btn">Login with Google</button>
         </div>
 
-        <!-- Upload Section (Only visible after login) -->
+        <!-- Upload Section -->
         <div id="upload-section" style="display: none;">
-            <h2>Welcome, <span id="user-name"></span>!</h2>
-            <button id="logout-btn">Logout</button>
-            <input type="file" id="fileInput">
-            <button onclick="uploadImage()">Upload</button>
+            <div class="user-info">
+                <h2>Welcome, <span id="user-name"></span>!</h2>
+                <button id="logout-btn" class="btn logout">Logout</button>
+            </div>
+
+            <div class="upload-box">
+                <input type="file" id="fileInput" accept="image/*">
+                <button onclick="uploadImage()" class="btn">Upload</button>
+                <p id="upload-status"></p>
+            </div>
+
             <h2>Your Gallery</h2>
-            <div id="gallery"></div>
+            <div id="gallery" class="gallery"></div>
         </div>
     </div>
 
