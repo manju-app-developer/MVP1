@@ -1,4 +1,4 @@
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBr0k-tSymwI_yqTRSNL3jxu30WbFzJ4ak",
   authDomain: "travelgram-260aa.firebaseapp.com",
@@ -9,6 +9,7 @@ const firebaseConfig = {
   measurementId: "G-C4NFTWY0VX"
 };
 
+// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
@@ -30,15 +31,17 @@ document.getElementById("logout-btn").addEventListener("click", () => {
     });
 });
 
-// 👤 Show User Info & Gallery
+// 👤 Show User Info & Load Gallery
 const showUserInfo = (user) => {
     document.getElementById("login-section").style.display = "none";
     document.getElementById("upload-section").style.display = "block";
     document.getElementById("user-name").innerText = user.displayName;
+
+    // Load gallery after login
     loadGallery();
 };
 
-// 🖼️ Upload & Save to LocalStorage
+// 🖼️ Upload Image & Save to LocalStorage
 const uploadImage = () => {
     let fileInput = document.getElementById("fileInput").files[0];
 
@@ -47,14 +50,20 @@ const uploadImage = () => {
         return;
     }
 
+    let uploadStatus = document.getElementById("upload-status");
+    uploadStatus.innerText = "Uploading...";
+
     let reader = new FileReader();
     reader.onload = function(event) {
         let imageUrl = event.target.result;
 
         // Save to LocalStorage
         let images = JSON.parse(localStorage.getItem("images")) || [];
-        images.push(imageUrl);
+        images.unshift(imageUrl); // Newest images first
         localStorage.setItem("images", JSON.stringify(images));
+
+        uploadStatus.innerText = "Upload Successful! ✅";
+        setTimeout(() => { uploadStatus.innerText = ""; }, 2000);
 
         addToGallery(imageUrl);
     };
@@ -64,16 +73,43 @@ const uploadImage = () => {
 // 📂 Load Gallery from LocalStorage
 const loadGallery = () => {
     let images = JSON.parse(localStorage.getItem("images")) || [];
-    document.getElementById("gallery").innerHTML = "";
-    images.forEach(imgUrl => addToGallery(imgUrl));
+    let gallery = document.getElementById("gallery");
+    gallery.innerHTML = "";
+
+    if (images.length === 0) {
+        gallery.innerHTML = "<p>No images uploaded yet.</p>";
+    } else {
+        images.forEach(imgUrl => addToGallery(imgUrl));
+    }
 };
 
-// 📌 Display Uploaded Images
+// 📌 Display Uploaded Images in Gallery
 const addToGallery = (url) => {
     let gallery = document.getElementById("gallery");
+    let imgContainer = document.createElement("div");
+    imgContainer.classList.add("gallery-item");
+
     let img = document.createElement("img");
     img.src = url;
-    gallery.appendChild(img);
+    img.alt = "Uploaded Image";
+
+    let deleteBtn = document.createElement("button");
+    deleteBtn.innerText = "🗑️";
+    deleteBtn.classList.add("delete-btn");
+    deleteBtn.onclick = () => removeImage(url);
+
+    imgContainer.appendChild(img);
+    imgContainer.appendChild(deleteBtn);
+    gallery.appendChild(imgContainer);
+};
+
+// ❌ Remove Image from LocalStorage & Gallery
+const removeImage = (url) => {
+    let images = JSON.parse(localStorage.getItem("images")) || [];
+    let filteredImages = images.filter(img => img !== url);
+    localStorage.setItem("images", JSON.stringify(filteredImages));
+
+    loadGallery(); // Refresh gallery
 };
 
 // 🔥 Check if user is logged in
