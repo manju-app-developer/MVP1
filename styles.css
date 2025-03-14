@@ -1,31 +1,130 @@
+/* General Page Styling */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
     text-align: center;
-    background-color: #f4f4f4;
+    background: linear-gradient(to right, #4facfe, #00f2fe);
+    margin: 0;
+    padding: 0;
 }
 
+/* Centered Container */
 .container {
-    width: 80%;
-    margin: auto;
+    width: 90%;
+    max-width: 600px;
+    margin: 50px auto;
     padding: 20px;
     background: white;
-    box-shadow: 0px 0px 10px gray;
-    border-radius: 10px;
-    margin-top: 50px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    transition: 0.3s ease-in-out;
 }
 
+.container:hover {
+    transform: scale(1.02);
+}
+
+/* Headings */
+h1, h2 {
+    color: #333;
+    font-weight: 600;
+}
+
+/* Buttons */
 button {
-    padding: 10px;
-    background-color: #007BFF;
+    padding: 12px 18px;
+    font-size: 16px;
+    font-weight: bold;
     color: white;
+    background: #007BFF;
     border: none;
     cursor: pointer;
-    margin-top: 10px;
+    border-radius: 5px;
+    transition: 0.3s ease-in-out;
 }
 
-#gallery img {
-    width: 120px;
-    height: auto;
+button:hover {
+    background: #0056b3;
+}
+
+/* Google Login Button */
+#login-btn {
+    background: #db4437;
+}
+
+#login-btn:hover {
+    background: #c1351d;
+}
+
+/* Logout Button */
+#logout-btn {
+    background: #f44336;
+}
+
+#logout-btn:hover {
+    background: #d32f2f;
+}
+
+/* File Upload Input */
+input[type="file"] {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Upload Status */
+#upload-status {
+    font-size: 14px;
+    color: #28a745;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Gallery Section */
+#gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* Gallery Items */
+.gallery-item {
+    position: relative;
     margin: 10px;
     border-radius: 10px;
+    overflow: hidden;
+    transition: 0.3s ease-in-out;
+}
+
+.gallery-item:hover {
+    transform: scale(1.05);
+}
+
+/* Uploaded Images */
+#gallery img {
+    width: 140px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Delete Button */
+.delete-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    padding: 5px 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s ease-in-out;
+}
+
+.delete-btn:hover {
+    background: red;
 }
